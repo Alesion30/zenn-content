@@ -1,0 +1,11 @@
+{
+  "name": "zenn-content",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Alesion30/zenn-content.git",
+  "author": "Yuta Ohira <alesion90@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "zenn-cli": "^0.1.110"
+  }
+}
