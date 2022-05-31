@@ -1,6 +1,11 @@
 {
   "name": "zenn-content",
   "author": "Yuta Ohira <alesion90@gmail.com>",
+  "scripts": {
+    "preview": "zenn preview",
+    "new:article": "zenn new:article",
+    "new:book": "zenn new:book"
+  },
   "dependencies": {},
   "devDependencies": {
     "zenn-cli": "0.1.110"
