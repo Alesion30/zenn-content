@@ -2,6 +2,7 @@
   "filters": {},
   "rules": {
     "preset-japanese": true,
-    "preset-ja-technical-writing": true
+    "preset-ja-technical-writing": true,
+    "preset-ja-spacing": true
   }
 }
