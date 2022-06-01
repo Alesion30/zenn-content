@@ -3,6 +3,7 @@
   "rules": {
     "preset-japanese": true,
     "preset-ja-technical-writing": true,
-    "preset-ja-spacing": true
+    "preset-ja-spacing": true,
+    "spellcheck-tech-word": true
   }
 }

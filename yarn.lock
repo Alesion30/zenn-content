@@ -2553,6 +2553,14 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.11.tgz#50c0d8c40a14ec1bf449bae69a0ea4685a9d9f95"
   integrity sha512-Ctl2BrFiM0X3MANYgj3CkygxhRmr9mi6xhejbdO960nF6EDJApTYpn0BQnDKlnNBULKiCN1n3w9EBkHK8ZWg+g==
 
+spellcheck-technical-word@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/spellcheck-technical-word/-/spellcheck-technical-word-2.0.0.tgz#cb0376b8bbda6239b6be009878cf81cf17080503"
+  integrity sha1-ywN2uLvaYjm2vgCYeM+BzxcIBQM=
+  dependencies:
+    structured-source "^3.0.2"
+    technical-word-rules "^1.4.2"
+
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
@@ -2651,6 +2659,11 @@ table@^6.8.0:
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
 
+technical-word-rules@^1.4.2:
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/technical-word-rules/-/technical-word-rules-1.9.5.tgz#49f0a9e78c6b2ef02a1a404790ddd8f5310aafbc"
+  integrity sha512-2sqzeb3aE23GtIO9fL9sDbqdt4vnoks7nWZRUgqEvYkjEmmQjrnVfl3WTURBZFrpgAXBNk0AMhWCj+17mzYXhw==
+
 text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
@@ -2663,7 +2676,7 @@ textlint-rule-helper@2.0.1:
   dependencies:
     unist-util-visit "^1.1.0"
 
-textlint-rule-helper@^1.1.5:
+textlint-rule-helper@^1.1.2, textlint-rule-helper@^1.1.5:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/textlint-rule-helper/-/textlint-rule-helper-1.2.0.tgz#be68d47a5146b16dd116278c9aeb7bd35631ccda"
   integrity sha1-vmjUelFGsW3RFieMmut701YxzNo=
@@ -3007,6 +3020,14 @@ textlint-rule-sentence-length@^3.0.0:
     sentence-splitter "^3.2.1"
     textlint-rule-helper "^2.1.1"
     textlint-util-to-string "^3.1.1"
+
+textlint-rule-spellcheck-tech-word@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/textlint-rule-spellcheck-tech-word/-/textlint-rule-spellcheck-tech-word-5.0.0.tgz#279be31fd4b395e1f87b4a1ef6392f1504894c42"
+  integrity sha1-J5vjH9SzleH4e0oe9jkvFQSJTEI=
+  dependencies:
+    spellcheck-technical-word "^2.0.0"
+    textlint-rule-helper "^1.1.2"
 
 textlint-util-to-string@^3.0.0, textlint-util-to-string@^3.1.1:
   version "3.1.1"
