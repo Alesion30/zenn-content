@@ -4,11 +4,14 @@
   "scripts": {
     "preview": "zenn preview",
     "new:article": "zenn new:article",
-    "new:book": "zenn new:book"
+    "new:book": "zenn new:book",
+    "lint:article": "textlint articles/*.md"
   },
   "dependencies": {},
   "devDependencies": {
     "textlint": "12.1.1",
+    "textlint-rule-preset-ja-technical-writing": "7.0.0",
+    "textlint-rule-preset-japanese": "7.0.0",
     "zenn-cli": "0.1.110"
   }
 }
