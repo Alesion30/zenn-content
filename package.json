@@ -1,6 +1,8 @@
 {
   "name": "zenn-content",
   "author": "Yuta Ohira <alesion90@gmail.com>",
+  "license": "UNLICENSED",
+  "private": true,
   "scripts": {
     "preview": "zenn preview",
     "new:article": "zenn new:article",
