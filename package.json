@@ -5,7 +5,8 @@
     "preview": "zenn preview",
     "new:article": "zenn new:article",
     "new:book": "zenn new:book",
-    "lint:article": "textlint articles/*.md"
+    "lint:article": "textlint articles/*.md",
+    "lint:book": "textlint books/*.md"
   },
   "dependencies": {},
   "devDependencies": {
