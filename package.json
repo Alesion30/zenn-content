@@ -5,6 +5,8 @@
     "preview": "zenn preview",
     "new:article": "zenn new:article",
     "new:book": "zenn new:book",
+    "list:article": "zenn list:articles",
+    "list:book": "zenn list:books",
     "lint:article": "textlint articles/*.md",
     "lint:book": "textlint books/*.md"
   },
