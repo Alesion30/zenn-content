@@ -47,7 +47,7 @@ sandbox-exec -f profile.sb プログラム名
 - **システム統合**: macOSに標準搭載されており、`sandbox-exec`コマンドで即座に利用可能
 - **既存プログラムへの適用**: プログラム自体を変更せず、実行時にサンドボックス化することが可能
 
-しかしながら、Apple Seatbeltは公式にドキュメントを公開されておらず、非推奨とされています。ただし、実際には多くのアプリケーションやツールで使用されています。
+しかしながら、Apple Seatbeltは公式にドキュメントを公開されておらず、非推奨とされています。一方で実際には多くのアプリケーションやツールで使用されています。
 
 **採用事例**
 - **iOS/macOSアプリ**: すべてのiOSアプリはサンドボックス内で実行される（ただし、現在は[App Sandbox](https://developer.apple.com/documentation/security/app-sandbox)が推奨される）
@@ -455,17 +455,30 @@ Claude Code公式が提供するサンドボックス機能です。macOSでは�
 - 禁止操作は即座に失敗し、エラーメッセージが表示されます
 
 :::message
-筆者の環境では、sandboxを解除し実行してしまう事象が発生してしまいました...
+筆者の環境では、sandboxを解除し実行してしまう事案が発生してしまいました...
 ![Claude Codeの実行メッセージ](https://storage.googleapis.com/zenn-user-upload/435a6d98318e-20251103.png)
 :::
 
 **設定方法**
 
-```json
-// .claude/settings.json
+```json:.claude/settings.json
 {
   "sandbox": {
     "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": ["docker"],
+    "network": {
+      "allowUnixSockets": [
+        "/var/run/docker.sock"
+      ],
+      "allowLocalBinding": true
+    }
+  },
+  "permissions": {
+    "deny": [
+      "Read(.envrc)",
+      "Read(~/.aws/**)"
+    ]
   }
 }
 ```
@@ -487,8 +500,7 @@ Claude Code公式が提供するサンドボックス機能です。macOSでは�
 
 **設定方法**
 
-```json
-// .claude/settings.json
+```json:.claude/settings.json
 {
   "permissions": {
     "allow": [
@@ -535,7 +547,7 @@ VS CodeのDev Containers拡張機能と連携し、コンテナ化された開�
 2. VS CodeでDev Containers拡張機能をインストール
 3. コマンドパレットから「Dev Containers: Reopen in Container」を実行
 
-## それぞれのアプローチの比較表
+## それぞれのアプローチの比較
 
 | 項目 | Claude Code Sandbox | Claude Code Permission Settings | DevContainer | SBPL自前用意（この記事で紹介する手法） |
 |------|---------------------|----------------------------------|---------------------|--------------|
@@ -545,8 +557,6 @@ VS CodeのDev Containers拡張機能と連携し、コンテナ化された開�
 | **オーバーヘッド** | ◎ ほぼなし | ◎ ほぼなし | △ コンテナ起動・リソース消費あり | ◎ ほぼなし |
 | **他ツールへの適用** | × Claude Code専用 | × Claude Code専用 | ◎ 任意の開発環境に適用可能 | ◎ 任意のコマンドに適用可能 |
 | **対応OS** | ○ macOS、Linux | ◎ 全OS | ◎ 全OS（Docker対応環境） | △ macOSのみ |
-
-## 各アプローチの使い分け
 
 それぞれの手法には明確な適用シーンがあります。
 
@@ -576,17 +586,7 @@ DevContainerは「完全な隔離環境」という点で優れています。�
 
 # まとめ
 
-Apple Seatbeltは、macOSで手軽にサンドボックス環境を構築できる強力な技術です。仕様は非公開で非推奨とされていますが、ChromiumやElectronベースの多くのアプリケーションで実績があります。
-
-AI Agentツールは強力な自動化能力を持つ一方で、誤操作やプロンプトインジェクションによるリスクがあります：
-
-- 機密情報の読み取り
-- 不要なファイルの書き込み
-- 過剰な外部通信
-
-Apple Seatbeltは、これらのリスクに対して特に有効です。機密ファイルの保護、不要な書き込みの抑止、ネットワーク制御など、細かいセキュリティ設定が可能です。
-
-OSネイティブのサンドボックスは、多層防御（Defense in Depth）の重要な一部です。IDEやツール側のpermissions、ファイル権限、ネットワーク制御などと組み合わせることで、より安全な開発環境を構築できます。最小権限の原則と段階的な許可を徹底することで、AI時代の開発体験を安全に保つことができるでしょう。
+AI Agentツールは、開発者の生産性を劇的に向上させる強力な存在です。しかし、[大いなる力には、大いなる責任が伴う](https://ja.wikipedia.org/wiki/%E5%A4%A7%E3%81%84%E3%81%AA%E3%82%8B%E5%8A%9B%E3%81%AB%E3%81%AF%E3%80%81%E5%A4%A7%E3%81%84%E3%81%AA%E3%82%8B%E8%B2%AC%E4%BB%BB%E3%81%8C%E4%BC%B4%E3%81%86) という言葉が示すとおり、その強力さゆえに適切な制御と防御が不可欠です。本記事で紹介したApple Seatbeltによるサンドボックス化は、ほぼオーバーヘッドなしでカーネルレベルの保護を実現できるmacOS開発者にとって理想的な手法です。機密情報の漏洩を防ぎ、意図しないファイル操作を抑止し、ネットワーク通信を適切に制御することで、AI Agentの力を最大限に活かしつつリスクを最小化できます。セキュリティは一度設定して終わりではなく、継続的な見直しと改善が必要です。本記事の内容を参考に、皆さんの環境に合わせた適切な防御策を講じ、安心安全なAI Agent活用を目指しましょう！
 
 # 参考文献
 
