@@ -58,17 +58,15 @@ sandbox-exec -f profile.sb プログラム名
 - **軽量**: コンテナやVMと異なり、ほぼオーバーヘッドなしで動作
 - **柔軟な制御**: SBPLによる細かい権限設定が可能（詳細は後述の「SBPL（Sandbox Profile Language）の基本」セクションで解説）
 - **システム統合**: macOSのセキュリティ機構と統合されており、`sandbox-exec`コマンドで即座に利用可能
-- **既存アプリへの適用**: アプリケーション自体を変更せず、実行時にサンドボックス化できる
+- **既存プログラムへの適用**: プログラム自体を変更せず、実行時にサンドボックス化できる
 
 ## Apple的には非推奨だが広く使われている技術
 
-Appleは公式にApple Seatbeltのドキュメントを公開していませんが、実際には多くのアプリケーションで使用されています。
+Appleは公式にApple Seatbeltのドキュメントを公開していませんが、実際には多くのアプリケーション・ツールで使用されています。
 
 **採用事例**
 - **iOS/macOSアプリ**: すべてのiOSアプリはサンドボックス内で実行される（ただし、現在は[App Sandbox](https://developer.apple.com/documentation/security/app-sandbox)が推奨される）
-- **Chromium**: macOS版ChromiumでApple Seatbeltを適用
-  - （[sandbox/mac ディレクトリ](https://github.com/chromium/chromium/tree/main/sandbox/mac)、
-  - Sandbox Profile: [`renderer.sb`](https://chromium.googlesource.com/chromium/src/+/770eff8/sandbox/policy/mac/renderer.sb)、[`gpu.sb`](https://chromium.googlesource.com/chromium/src/+/770eff8/sandbox/policy/mac/gpu.sb)）
+- **Chromium**: macOS版ChromiumでApple Seatbeltを適用（[sandbox/mac ディレクトリ](https://github.com/chromium/chromium/tree/main/sandbox/mac)、Sandbox Profile: [`renderer.sb`](https://chromium.googlesource.com/chromium/src/+/770eff8/sandbox/policy/mac/renderer.sb)、[`gpu.sb`](https://chromium.googlesource.com/chromium/src/+/770eff8/sandbox/policy/mac/gpu.sb)）
 - **AI Agentツール**:
   - **Claude Code**: macOSでApple Seatbeltを使用してファイルシステムとネットワークを隔離（[公式ドキュメント](https://docs.claude.com/en/docs/claude-code/sandboxing)、[オープンソース実装](https://github.com/anthropic-experimental/sandbox-runtime)）
   - **Gemini CLI**: macOS向けSBPLファイルを公開（[`sandbox-macos-permissive-open.sb`](https://github.com/google-gemini/gemini-cli/blob/main/packages/cli/src/utils/sandbox-macos-permissive-open.sb)）
@@ -230,7 +228,7 @@ sandbox-exec \
 
 ## エイリアス登録
 
-毎回長いコマンドを打つのは面倒なため、`.zshrc`や`.bashrc`へエイリアスを登録します。
+毎回長いコマンドを打つのは面倒なため、`.zshrc`や`.bashrc`へエイリアスを登録すると良いでしょう。
 
 ```bash
 # ~/.zshrc に追加
@@ -239,11 +237,7 @@ alias claude-sandbox='sandbox-exec -f ~/sandbox-macos-permissive-open.sb -D TARG
 
 以降は`claude-sandbox`コマンドで起動できます。
 
-# Sandbox動作の検証とデバッグ
-
-Sandboxが意図通りに動作しているかを確認する方法を紹介します。
-
-## ログ出力の監視
+## ログ出力の監視によるデバッグ方法
 
 別のターミナルで以下のコマンドを実行すると、Sandboxによって拒否された操作をリアルタイムで確認できます。
 
@@ -303,14 +297,16 @@ echo "test" > /tmp/test.txt
 | **Windows Sandbox** | 軽量VM、使い捨て環境 | マルウェア解析 |
 | **DevContainer** | VS Code統合、再現性 | 開発環境統一 |
 
-## Apple Seatbeltのメリット
+## Apple Seatbeltのメリット・デメリット
+
+### メリット
 
 - **軽量**: ほぼオーバーヘッドなし
 - **即座に利用可能**: macOSへ標準搭載
 - **プロセス単位で制御**: 既存の環境を変更せず、特定のプロセスのみ制限
 - **細かい制御**: ファイルパス、ネットワーク、IPCなど詳細な設定が可能
 
-## デメリット
+### デメリット
 
 - **非公式**: 仕様変更のリスク
 - **ドキュメント不足**: 試行錯誤が必要
@@ -319,7 +315,7 @@ echo "test" > /tmp/test.txt
 
 # Claude Codeのセキュリティ設定：4つのアプローチ比較
 
-公式で紹介されているClaude Codeのセキュリティを強化する方法は主に3つあります。それぞれの特徴と使い分けを詳しく解説し、本記事で紹介する手法と比較します。
+公式で紹介されているClaude Codeのセキュリティを強化する方法は主に3つ用意されています。（2025年11月現在）それぞれの特徴と使い分けを詳しく解説し、本記事で紹介する手法を含め4つのアプローチで比較します。
 
 ## 1. Claude Code Sandbox（公式サンドボックス機能）
 
@@ -344,6 +340,11 @@ Claude Code公式が提供するサンドボックス機能です。macOSでは�
 
 - Apple Seatbeltによるカーネルレベルの隔離（[オープンソース実装](https://github.com/anthropic-experimental/sandbox-runtime)）
 - 禁止操作は即座に失敗し、エラーメッセージを表示
+
+:::message
+筆者の環境では、sandboxを解除し実行してしまう事象が発生してしまいました...
+![Claude Codeの実行メッセージ](https://storage.googleapis.com/zenn-user-upload/435a6d98318e-20251103.png)
+:::
 
 ## 2. Claude Code Permission Settings（パーミッション設定）
 
@@ -447,16 +448,13 @@ VS Codeの Dev Containers拡張機能と連携し、コンテナ化された開�
 
 Development containersが「完全な隔離環境」という点で優れているのは事実ですが、日常的な開発フローにおいては、起動コストやリソース消費が開発体験を損なう可能性があります。一方、SBPL自前用意では、カーネルレベルの保護を維持しながら**プロセス起動時のオーバーヘッドをほぼゼロ**に抑えられるため、パフォーマンスとセキュリティの両立が求められるmacOS開発者にとって理想的な選択肢となります。
 
-# AI AgentとApple Seatbeltの関係（多層防御の位置付け）
-
-AI Agentは強力な自動化能力を持つ一方、誤操作やプロンプトインジェクションにより機密情報の読み取りや不要な書き込み、過剰な外部通信を行うリスクがあります。Apple SeatbeltのようなOSネイティブのサンドボックスは、これらのリスクの影響範囲を限定する強力な手段です。多層防御（Defense in Depth）の一部として、IDEやツール側のpermissions、ファイル権限、ネットワーク制御等と組み合わせて活用することが重要です。詳細な多層防御の解説は、例えば[OWASP: Defense in depth](https://owasp.org/www-community/Defense_in_depth)などを参考にすると良いでしょう。
-
 # まとめ
 
-Apple Seatbeltは、macOSで手軽にサンドボックス環境を構築できる強力な技術です。仕様非公開で非推奨ではあるものの、ChromiumやElectronベースの多くのアプリケーションで実績があり、AI Agentツールのセキュリティ強化（機密ファイル保護、不要な書き込み抑止、ネットワーク制御）に特に有効です。App Sandbox等の公式手段やIDE側permissionsと組み合わせ、最小権限・段階的許可を徹底することで、AI時代の開発体験を安全に保てます。
+Apple Seatbeltは、macOSで手軽にサンドボックス環境を構築できる強力な技術です。仕様非公開で非推奨ではあるものの、ChromiumやElectronベースの多くのアプリケーションで実績があり、AI Agentツールのセキュリティ強化（機密ファイル保護、不要な書き込み抑止、ネットワーク制御）に特に有効です。AI Agentは強力な自動化能力を持つ一方、誤操作やプロンプトインジェクションにより機密情報の読み取りや不要な書き込み、過剰な外部通信を行うリスクがあります。Apple SeatbeltのようなOSネイティブのサンドボックスは、多層防御（Defense in Depth）の一環として、これらのリスクの影響範囲を限定する強力な手段となります。IDEやツール側のpermissions、ファイル権限、ネットワーク制御等と組み合わせ、最小権限・段階的許可を徹底することで、AI時代の開発体験を安全に保てます。
 
 # 参考文献
 
 - [Sandbox operations - Apple Developer (非公式逆引き)](https://reverse.put.as/wp-content/uploads/2011/09/Apple-Sandbox-Guide-v1.0.pdf)
 - [Apple Developer: App Sandbox](https://developer.apple.com/documentation/security/app_sandbox)
 - [macOS Security and Privacy Guide](https://github.com/drduh/macOS-Security-and-Privacy-Guide)
+- [The principle of Defense-in-Depth](https://cheatsheetseries.owasp.org/cheatsheets/Secure_Product_Design_Cheat_Sheet.html#2-the-principle-of-defense-in-depth)
