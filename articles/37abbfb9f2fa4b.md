@@ -3,7 +3,7 @@ title: "macOSで手軽にSandbox環境を構築できるApple Seatbeltの実践�
 emoji: "🔒"
 type: "tech"
 topics: ["mac", "security", "ai", "claudeCode", "appleSeatbelt"]
-published: false
+published: true
 ---
 
 # TL;DR
