@@ -343,9 +343,9 @@ Sandbox: claude(12345) deny(1) file-write-data /etc/hosts
 前述したログ出力を用いつつ、各々の環境に合わせてファイルの内容を微調整することをおすすめします。
 :::
 
-以下の内容で`sandbox-macos-permissive-open.sb`ファイルを作成します。
+以下の内容で`profile.sb`ファイルを作成します。
 
-```scheme
+```scheme:profile.sb
 (version 1)
 
 ;; デフォルトで全て拒否（ホワイトリスト方式）
@@ -416,7 +416,7 @@ Sandbox: claude(12345) deny(1) file-write-data /etc/hosts
 ```bash
 # Sandbox内でClaude Codeを起動
 sandbox-exec \
-  -f sandbox-macos-permissive-open.sb \
+  -f profile.sb \
   -D TARGET_DIR="$(pwd)" \
   -D HOME_DIR="$HOME" \
   claude
@@ -434,7 +434,7 @@ sandbox-exec \
 
 ```bash
 # ~/.zshrc に追加
-alias claude-sandbox='sandbox-exec -f ~/sandbox-macos-permissive-open.sb -D TARGET_DIR="$(pwd)" -D HOME_DIR="$HOME" claude'
+alias claude-sandbox='sandbox-exec -f ~/profile.sb -D TARGET_DIR="$(pwd)" -D HOME_DIR="$HOME" claude'
 ```
 
 以降は`claude-sandbox`コマンドで起動できます。
