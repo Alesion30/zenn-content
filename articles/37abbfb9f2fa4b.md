@@ -15,7 +15,7 @@ published: true
 
 # 想定読者
 
-- macOSでClaude CodeやCursor等のAI Agentツールを使用している開発者
+- macOSでClaude CodeやGemini等のAI Agentツールを使用している開発者
 - AI Agentの実行権限を制限し、セキュリティを強化したい方
 - macOSのサンドボックス機構に興味がある方
 
@@ -23,7 +23,7 @@ published: true
 
 Apple Seatbeltは、macOSに標準搭載されているサンドボックス機構です。アプリケーションやプロセスに対して、ファイルシステム、ネットワーク、プロセス間通信などのリソースアクセスを細かく制限できます。
 
-参考: [Sandbox operations (非公式逆引き)](https://reverse.put.as/wp-content/uploads/2011/09/Apple-Sandbox-Guide-v1.0.pdf)
+参考: [Apple's Sandbox Guide (非公式逆引き)](https://reverse.put.as/wp-content/uploads/2011/09/Apple-Sandbox-Guide-v1.0.pdf)
 
 Apple Seatbeltは、macOSのカーネルレベルで動作する強制アクセス制御（MAC: Mandatory Access Control）機構です。プロセスに対して以下の流れでアクセス制御を行います。
 
@@ -33,7 +33,7 @@ Apple Seatbeltは、macOSのカーネルレベルで動作する強制アクセ�
 
 プロファイルは **SBPL（Sandbox Profile Language）** という専用言語で記述します。SBPLはSchemeライクな[S式](https://ja.wikipedia.org/wiki/S%E5%BC%8F)による宣言的な設定形式です。「このディレクトリ以下への書き込みは許可するが、.envファイルの読み込みは拒否する」といった細かいルールを柔軟に定義できます。
 
-ターミナルから以下のように使用します：
+ターミナルから以下のように使用します。
 
 ```bash
 # sandbox-execコマンドでプロファイルを適用してプログラムを実行
@@ -574,7 +574,7 @@ Claude Code利用者にとって最も手軽な選択肢です。JSONファイ�
 
 macOS環境において最も柔軟かつ高性能な選択肢です。カーネルレベルでの細かい制御が可能でありながら、**ほぼオーバーヘッドなし**で動作します。
 
-コンテナのような起動待ち時間はありません。ネイティブなプロセス実行速度を維持しつつ、以下のような細かい制御が可能です：
+コンテナのような起動待ち時間はありません。ネイティブなプロセス実行速度を維持しつつ、以下のような細かい制御が可能です。
 
 - 正規表現による詳細なパス制御
 - 送受信を別々に管理できるネットワーク制御
@@ -586,11 +586,11 @@ DevContainerは「完全な隔離環境」という点で優れています。�
 
 # まとめ
 
-AI Agentツールは、開発者の生産性を劇的に向上させる強力な存在です。しかし、[大いなる力には、大いなる責任が伴う](https://ja.wikipedia.org/wiki/%E5%A4%A7%E3%81%84%E3%81%AA%E3%82%8B%E5%8A%9B%E3%81%AB%E3%81%AF%E3%80%81%E5%A4%A7%E3%81%84%E3%81%AA%E3%82%8B%E8%B2%AC%E4%BB%BB%E3%81%8C%E4%BC%B4%E3%81%86) という言葉が示すとおり、その強力さゆえに適切な制御と防御が不可欠です。本記事で紹介したApple Seatbeltによるサンドボックス化は、ほぼオーバーヘッドなしでカーネルレベルの保護を実現できるmacOS開発者にとって理想的な手法です。機密情報の漏洩を防ぎ、意図しないファイル操作を抑止し、ネットワーク通信を適切に制御することで、AI Agentの力を最大限に活かしつつリスクを最小化できます。セキュリティは一度設定して終わりではなく、継続的な見直しと改善が必要です。本記事の内容を参考に、皆さんの環境に合わせた適切な防御策を講じ、安心安全なAI Agent活用を目指しましょう！
+AI Agentは、開発者の生産性を劇的に向上させる強力な存在です。しかし、[大いなる力には、大いなる責任が伴う](https://ja.wikipedia.org/wiki/%E5%A4%A7%E3%81%84%E3%81%AA%E3%82%8B%E5%8A%9B%E3%81%AB%E3%81%AF%E3%80%81%E5%A4%A7%E3%81%84%E3%81%AA%E3%82%8B%E8%B2%AC%E4%BB%BB%E3%81%8C%E4%BC%B4%E3%81%86) という言葉が示すとおり、その強力さゆえに適切な制御と防御が不可欠です。本記事で紹介したApple Seatbeltによるサンドボックス化は、ほぼオーバーヘッドなしでカーネルレベルの保護を実現できるmacOS開発者にとって理想的な手法です。機密情報の漏洩を防ぎ、意図しないファイル操作を抑止し、ネットワーク通信を適切に制御することで、AI Agentの力を最大限に活かしつつリスクを最小化できます。セキュリティは一度設定して終わりではなく、継続的な見直しと改善が必要です。本記事の内容を参考に、皆さんの環境に合わせた適切な防御策を講じ、安心安全なAI Agent活用を目指しましょう！
 
 # 参考文献
 
-- [Sandbox operations - Apple Developer (非公式逆引き)](https://reverse.put.as/wp-content/uploads/2011/09/Apple-Sandbox-Guide-v1.0.pdf)
+- [Apple's Sandbox Guide - Apple Developer (非公式逆引き)](https://reverse.put.as/wp-content/uploads/2011/09/Apple-Sandbox-Guide-v1.0.pdf)
 - [Apple Developer: App Sandbox](https://developer.apple.com/documentation/security/app_sandbox)
 - [macOS Security and Privacy Guide](https://github.com/drduh/macOS-Security-and-Privacy-Guide)
 - [The principle of Defense-in-Depth](https://cheatsheetseries.owasp.org/cheatsheets/Secure_Product_Design_Cheat_Sheet.html#2-the-principle-of-defense-in-depth)
