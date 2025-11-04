@@ -590,7 +590,7 @@ AI Agentは、開発者の生産性を劇的に向上させる強力な存在で
 
 # 参考文献
 
-- [Apple's Sandbox Guide - Apple Developer (非公式逆引き)](https://reverse.put.as/wp-content/uploads/2011/09/Apple-Sandbox-Guide-v1.0.pdf)
+- [Apple's Sandbox Guide (非公式逆引き)](https://reverse.put.as/wp-content/uploads/2011/09/Apple-Sandbox-Guide-v1.0.pdf)
 - [Apple Developer: App Sandbox](https://developer.apple.com/documentation/security/app_sandbox)
 - [macOS Security and Privacy Guide](https://github.com/drduh/macOS-Security-and-Privacy-Guide)
 - [The principle of Defense-in-Depth](https://cheatsheetseries.owasp.org/cheatsheets/Secure_Product_Design_Cheat_Sheet.html#2-the-principle-of-defense-in-depth)
