@@ -1,0 +1,34 @@
+json canvas でワイヤーフレームを作り、AI でモックアップ化する
+
+- 背景
+  - デザインも AI に考えさせてモックアップを作る時の指示が難しい。狙ったデザインをなかなか作るのが難しい。
+    - テキストベース？
+      - コンポーネントの配置などを指示するの大変
+    - お絵描き？
+      - 絵描くのだるい
+    - figma？
+      - わざわざfigma用意するの大変
+  - いきなり実装させてプロトタイプを作らせると、後から修正がキツイ。段々コードベースが荒れる
+  - そこで、json canvas で骨組みを構築し、これをコンテキストとして AI に肉付けさせることで狙ったデザインを作れるのでは？
+  - json canvasによるワイヤーフレーム + デザインシステム（既存のコードベース） => モックアップ
+- json canvas について
+  - 無限キャンバスをjsonで表現可能
+  - obsidianでも使われている
+    - https://obsidian.md/blog/json-canvas/
+  - JSON-Canvas-Viewerを使えば、json canvasを描画できる
+    - https://github.com/Hesprs/JSON-Canvas-Viewer
+  - 参考文献
+    - https://qiita.com/shikuno_dev/items/856fa736f595c2f016aa
+    - https://jsoncanvas.org/spec/1.0/
+    - https://pottal-portal.com/PtPr3/posts/JSON_Canvas_to_Markdown_py.html
+    - https://gigazine.net/news/20240428-jsoncanvas-open-file-format/
+    - https://hi-canvas.marknoteapp.com/
+- 実験
+  - 比較対象
+    - json canvas
+    - お絵描き
+    - figma
+    - テキストベースの指示
+  - 方法
+    - 管理画面の を作らせる
+    - shadcn tailwind html で
